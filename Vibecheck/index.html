@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VibeCheck: AI Mental Wellness</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+    <style>
+        /* --- GEN Z AURORA STYLING --- */
+        :root { --primary: #6366f1; --secondary: #ec4899; --accent: #8b5cf6; --text-main: #1e293b; --text-muted: #475569; --glass-bg: rgba(255, 255, 255, 0.65); --glass-border: 1px solid rgba(255, 255, 255, 0.8); --shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.07); }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Outfit', sans-serif; color: var(--text-main); line-height: 1.6; overflow-x: hidden; background-color: #f3f4f6; }
+        
+        /* Aurora Background Animation */
+        .aurora-bg { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: -1; background: radial-gradient(at 0% 0%, hsla(253,16%,7%,1) 0, transparent 50%), radial-gradient(at 50% 0%, hsla(225,39%,30%,1) 0, transparent 50%), radial-gradient(at 100% 0%, hsla(339,49%,30%,1) 0, transparent 50%); background-size: 200% 200%; animation: gradient 15s ease infinite; background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab); background-size: 400% 400%; opacity: 0.15; }
+        @keyframes gradient { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
+        
+        .container { max-width: 1100px; margin: 0 auto; padding: 0 20px; }
+        section { padding: 80px 0; }
+        .glass-card { background: var(--glass-bg); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border-radius: 24px; border: var(--glass-border); box-shadow: var(--shadow); padding: 40px; transition: transform 0.3s ease; }
+        .glass-card:hover { transform: translateY(-5px); }
+        
+        h1, h2, h3 { font-weight: 800; letter-spacing: -1px; }
+        h2 { font-size: 3rem; text-align: center; margin-bottom: 50px; }
+        h2 span { background: linear-gradient(to right, var(--primary), var(--secondary)); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
+        
+        .btn { display: inline-block; padding: 15px 35px; border-radius: 50px; text-decoration: none; font-weight: 600; border: none; cursor: pointer; font-size: 1.1rem; transition: all 0.3s ease; }
+        .btn-primary { background: linear-gradient(135deg, var(--primary), var(--accent)); color: white; box-shadow: 0 10px 20px rgba(99, 102, 241, 0.3); }
+        .btn-primary:hover { transform: scale(1.05); box-shadow: 0 15px 30px rgba(99, 102, 241, 0.4); }
+        
+        header { position: fixed; top: 0; left: 0; width: 100%; padding: 20px 0; background: rgba(255, 255, 255, 0.8); backdrop-filter: blur(10px); z-index: 1000; }
+        nav { display: flex; justify-content: space-between; align-items: center; }
+        .logo { font-size: 1.8rem; font-weight: 800; color: var(--text-main); display: flex; align-items: center; gap: 10px; }
+        .logo i { color: var(--primary); }
+        
+        #hero { min-height: 100vh; display: flex; align-items: center; padding-top: 80px; }
+        .hero-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center; }
+        #hero h1 { font-size: 4.5rem; line-height: 1.1; margin-bottom: 20px; }
+        #hero p { font-size: 1.3rem; color: var(--text-muted); margin-bottom: 30px; }
+        .hero-img-box { position: relative; }
+        .hero-img-box img { width: 100%; border-radius: 30px; box-shadow: 20px 20px 60px rgba(0,0,0,0.15); transform: rotate(2deg); }
+        .floating-badge { position: absolute; bottom: -20px; left: -20px; background: white; padding: 15px 25px; border-radius: 20px; box-shadow: var(--shadow); font-weight: 700; color: var(--primary); display: flex; align-items: center; gap: 10px; animation: float 3s ease-in-out infinite; }
+        @keyframes float { 0% { transform: translateY(0px); } 50% { transform: translateY(-10px); } 100% { transform: translateY(0px); } }
+        
+        .features-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 30px; }
+        .feature-icon { font-size: 2rem; margin-bottom: 20px; background: white; width: 70px; height: 70px; border-radius: 20px; display: flex; align-items: center; justify-content: center; color: var(--primary); box-shadow: var(--shadow); }
+        
+        .bento-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; }
+        .bento-item { background: white; padding: 20px; border-radius: 20px; text-align: center; border: 1px solid #e2e8f0; transition: transform 0.3s; }
+        .bento-item:hover { border-color: var(--primary); transform: translateY(-5px); }
+        .bento-item i { font-size: 2rem; color: var(--text-muted); margin-bottom: 10px; }
+        
+        /* Chat Widget */
+        .chat-widget { position: fixed; bottom: 30px; right: 30px; width: 380px; height: 600px; background: white; border-radius: 25px; box-shadow: 0 25px 80px rgba(0,0,0,0.2); display: flex; flex-direction: column; overflow: hidden; transform: scale(0); transform-origin: bottom right; transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); z-index: 2000; border: 1px solid #e2e8f0; }
+        .chat-widget.open { transform: scale(1); }
+        .chat-header { padding: 20px; background: linear-gradient(to right, var(--primary), var(--accent)); color: white; font-weight: 700; display: flex; justify-content: space-between; align-items: center; }
+        .chat-messages { flex: 1; padding: 20px; overflow-y: auto; background: #f8fafc; }
+        .bubble { max-width: 80%; padding: 12px 18px; border-radius: 18px; margin-bottom: 12px; font-size: 0.95rem; box-shadow: 0 2px 5px rgba(0,0,0,0.03); }
+        .bubble.bot { background: white; color: var(--text-main); border-bottom-left-radius: 4px; border: 1px solid #e2e8f0; }
+        .bubble.user { background: var(--primary); color: white; margin-left: auto; border-bottom-right-radius: 4px; }
+        .chat-input { display: flex; padding: 15px; border-top: 1px solid #f1f5f9; background: white; }
+        .chat-input input { flex: 1; background: #f1f5f9; border: 1px solid transparent; padding: 12px 20px; border-radius: 50px; outline: none; transition: all 0.3s; }
+        .chat-input input:focus { background: white; border-color: var(--primary); }
+        .chat-input button { background: var(--primary); border: none; width: 45px; height: 45px; border-radius: 50%; margin-left: 10px; color: white; cursor: pointer; box-shadow: 0 4px 10px rgba(99, 102, 241, 0.3); }
+        
+        @media (max-width: 768px) { .hero-grid { grid-template-columns: 1fr; text-align: center; } .hero-img-box { display: none; } #hero h1 { font-size: 3rem; } .bento-grid { grid-template-columns: 1fr 1fr; } .chat-widget { width: 100%; height: 100%; bottom: 0; right: 0; border-radius: 0; } }
+    </style>
+</head>
+<body>
+    <div class="aurora-bg"></div>
+    <header> <div class="container"> <nav> <div class="logo"><i class="fa-solid fa-bolt"></i> VibeCheck</div> <button class="btn btn-primary open-chat-btn">Start Vibe Check</button> </nav> </div> </header>
+    <main>
+        <section id="hero"> <div class="container"> <div class="hero-grid"> <div class="hero-text"> <h1>No Drama.<br>Just <span>Good Vibes.</span></h1> <p>Your 24/7 AI safe space. Exams got you stressed? Parents nagging? Vent here anonymously. Zero judgment.</p> <button class="btn btn-primary open-chat-btn">Chat Now <i class="fa-solid fa-arrow-right"></i></button> </div> <div class="hero-img-box"> <img src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?q=80&w=1740&auto=format&fit=crop" alt="Chill Vibes"> <div class="floating-badge"> <i class="fa-solid fa-check-circle" style="color:#22c55e;"></i> 100% Private </div> </div> </div> </div> </section>
+        <section id="problem"> <div class="container"> <h2>What's the <span>Tea?</span></h2> <div class="glass-card" style="display: flex; align-items: center; gap: 40px;"> <div style="flex: 1;"> <img src="https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?q=80&w=1974&auto=format&fit=crop" style="width: 100%; border-radius: 20px;" alt="Stress"> </div> <div style="flex: 1;"> <h3 style="font-size: 1.8rem; margin-bottom: 20px;">Exams. Pressure. Chaos.</h3> <p style="font-size: 1.1rem; color: #475569;"> Let’s be real. Between entrance exams, parent expectations, and Instagram FOMO, life gets heavy. But talking to friends or parents isn't always easy. </p> <br> <p style="font-weight: 700; color: var(--primary);">You need a place to vent without the lecture.</p> </div> </div> </div> </section>
+        <section id="features"> <div class="container"> <h2>Features <span>No Cap</span></h2> <div class="features-grid"> <div class="glass-card"> <div class="feature-icon"><i class="fa-solid fa-ghost"></i></div> <h3>Ghost Mode</h3> <p>100% Anonymous. No login, no tracking. Your secrets die here.</p> </div> <div class="glass-card"> <div class="feature-icon"><i class="fa-solid fa-language"></i></div> <h3>Hinglish Mode</h3> <p>Talk in Hindi, English, or mix it up. I get the vibe.</p> </div> <div class="glass-card"> <div class="feature-icon"><i class="fa-solid fa-brain"></i></div> <h3>Smart AI</h3> <p>Powered by Llama 3 / Gemini. Not a generic chatbot.</p> </div> </div> </div> </section>
+        <section id="tech"> <div class="container"> <h2 style="font-size: 2rem; margin-bottom: 30px;">The <span>Stack</span></h2> <div class="bento-grid"> <div class="bento-item"> <i class="fa-solid fa-microchip" style="color: #f97316;"></i> <h4>Groq</h4> </div> <div class="bento-item"> <i class="fa-solid fa-robot" style="color: #3b82f6;"></i> <h4>Llama 3</h4> </div> <div class="bento-item"> <i class="fa-brands fa-js" style="color: #eab308;"></i> <h4>Vanilla JS</h4> </div> <div class="bento-item"> <i class="fa-solid fa-lock" style="color: #22c55e;"></i> <h4>Privacy</h4> </div> </div> </div> </section>
+    </main>
+    <footer style="text-align: center; padding: 40px; color: #64748b;"> <p>© 2025 VibeCheck. Built for Gradcircle Innovation Challenge.</p> </footer>
+    
+    <div class="chat-widget" id="chat-widget"> <div class="chat-header"> <span><i class="fa-solid fa-bolt"></i> VibeCheck AI</span> <span id="close-chat" style="cursor: pointer; font-size: 1.5rem;">&times;</span> </div> <div class="chat-messages" id="chat-messages"> <div class="bubble bot">Yo! I'm VibeCheck. What's on your mind?</div> </div> <form class="chat-input" id="chat-form"> <input type="text" id="chat-input-field" placeholder="Type here..." autocomplete="off"> <button type="submit"><i class="fas fa-paper-plane"></i></button> </form> </div>
+
+    <script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const HARDCODED_KEY = ""; 
+
+        let activeKey = HARDCODED_KEY;
+        const chatWidget = document.getElementById('chat-widget');
+        const openBtns = document.querySelectorAll('.open-chat-btn');
+        const closeBtn = document.getElementById('close-chat');
+        const messagesDiv = document.getElementById('chat-messages');
+        const form = document.getElementById('chat-form');
+        const inputField = document.getElementById('chat-input-field');
+        let history = [];
+
+        const systemPrompt = `You are VibeCheck, a cool, empathetic AI friend for Gen Z students in India. STYLE: Speak casually, use Hinglish. Use slang like "scene sorted", "tension mat le", "no cap". Be short and supportive. SAFETY: If suicide/self-harm mentioned, STOP and reply ONLY: "Hey, that sounds really heavy. I'm just an AI, please talk to a real adult or a pro right now."`;
+
+        openBtns.forEach(btn => btn.addEventListener('click', () => {
+            chatWidget.classList.add('open');
+            if(!activeKey && messagesDiv.childElementCount === 1) {
+                addMessage("👋 Yo! To start the demo, please paste your Groq or Gemini API Key.", 'bot');
+            }
+        }));
+        closeBtn.addEventListener('click', () => chatWidget.classList.remove('open'));
+
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const text = inputField.value.trim();
+            if(!text) return;
+
+            // 1. If we don't have a key yet, treat the first input as the key
+            if(!activeKey) {
+                if(text.startsWith('gsk_') || text.startsWith('AIza')) {
+                    activeKey = text.trim();
+                    addMessage("Key accepted! Locked in. 🔒 What's on your mind?", 'bot');
+                    inputField.value = '';
+                    inputField.placeholder = "Type your message...";
+                } else {
+                    addMessage("That doesn't look like a valid key. Paste a Groq (gsk_) or Gemini (AIza) key.", 'bot');
+                }
+                return;
+            }
+
+            // 2. Normal Chat Logic
+            addMessage(text, 'user');
+            inputField.value = '';
+            const loadingBubble = addMessage("Thinking...", 'bot');
+
+            try {
+                let reply = "";
+                if (activeKey.startsWith('gsk_')) {
+                    history.push({ role: "user", content: text });
+                    reply = await callGroq(history);
+                    history.push({ role: "assistant", content: reply });
+                } else {
+                    history.push({ role: "user", parts: [{ text: text }] });
+                    reply = await callGemini(history);
+                    history.push({ role: "model", parts: [{ text: reply }] });
+                }
+                loadingBubble.textContent = reply;
+            } catch (err) {
+                loadingBubble.textContent = "Error: " + err.message;
+            }
+        });
+
+        function addMessage(txt, sender) {
+            const div = document.createElement('div');
+            div.className = `bubble ${sender}`;
+            div.textContent = txt;
+            messagesDiv.appendChild(div);
+            messagesDiv.scrollTop = messagesDiv.scrollHeight;
+            return div;
+        }
+
+        async function callGroq(hist) {
+            const res = await fetch('https://api.groq.com/openai/v1/chat/completions', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${activeKey}` },
+                body: JSON.stringify({ model: 'llama-3.3-70b-versatile', messages: [{ role: "system", content: systemPrompt }, ...hist], max_tokens: 500 })
+            });
+            const data = await res.json();
+            if(data.error) throw new Error(data.error.message);
+            return data.choices[0].message.content;
+        }
+
+        async function callGemini(hist) {
+            const res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${activeKey}`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ contents: hist, systemInstruction: { parts: [{ text: systemPrompt }] } })
+            });
+            const data = await res.json();
+            return data.candidates[0].content.parts[0].text;
+        }
+    });
+    </script>
+</body>
+</html>
